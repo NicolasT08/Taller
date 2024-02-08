@@ -1,21 +1,28 @@
-package org.example;
+package org.example.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
 public class NPC {
     private String name;
     private int level;
-    private String[] skills;
+    private ArrayList<Skill> skills;
 
+    private Faction faction;
     public NPC(){
 
     }
 
-    public NPC(String name, int level, String[] skills) {
+    public NPC(String name) {
+        this.name = name;
+    }
+
+    public NPC(String name, int level, ArrayList<Skill> skills, Faction faction) {
         this.name = name;
         this.level = level;
         this.skills = skills;
+        this.faction = faction;
     }
 
     public String getName() {
@@ -34,12 +41,20 @@ public class NPC {
         this.level = level;
     }
 
-    public String[] getSkills() {
+    public ArrayList<Skill> getSkills() {
         return skills;
     }
 
-    public void setSkills(String[] skills) {
+    public void setSkills(ArrayList<Skill> skills) {
         this.skills = skills;
+    }
+
+    public Faction getFaction() {
+        return faction;
+    }
+
+    public void setFaction(Faction faction) {
+        this.faction = faction;
     }
 
     @Override
@@ -47,7 +62,7 @@ public class NPC {
         return "NPC{" +
                 "name='" + name + '\'' +
                 ", level=" + level +
-                ", skills=" + Arrays.toString(skills) +
+                ", skills=" + skills +
                 '}';
     }
 
@@ -56,13 +71,11 @@ public class NPC {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NPC npc = (NPC) o;
-        return level == npc.level && Objects.equals(name, npc.name) && Arrays.equals(skills, npc.skills);
+        return level == npc.level && Objects.equals(name, npc.name) && Objects.equals(skills, npc.skills);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(name, level);
-        result = 31 * result + Arrays.hashCode(skills);
-        return result;
+        return Objects.hash(name, level, skills);
     }
 }
