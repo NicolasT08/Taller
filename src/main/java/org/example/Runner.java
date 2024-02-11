@@ -12,6 +12,7 @@ import java.util.List;
 public class Runner {
     public static void main(String[] args) {
         // Creamos una instancia del controlador de relaciones
+
         RelationShipController controller = new RelationShipController();
 
         // Recuperamos el grafo
@@ -34,5 +35,9 @@ public class Runner {
         } else {
             System.out.println("No se encontraron NPC con los nombres especificados.");
         }
+
+
+
+        Window window = new Window();
     }
 }
