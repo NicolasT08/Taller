@@ -1,8 +1,9 @@
 package org.example.model;
 
-import org.example.model.NPC;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class RelationShip {
     private NPC source;
@@ -39,24 +40,27 @@ public class RelationShip {
     public void calculateCustomWeight() {
         this.weight = Math.abs(this.source.getLevel() - this.target.getLevel());
 
-        if( this.weight <=4 ){
-            this.weight++;
-        }
 
-        for (Skill skill : this.source.getSkills()) {
-            if (this.target.getSkills().contains(skill)) {
-                int sourceSkillLevel = skill.getLevel();
-                int targetSkillLevel = this.target.getSkills().stream()
-                        .filter(s -> s.getType().equals(skill.getType()))
-                        .mapToInt(Skill::getLevel)
-                        .findFirst()
-                        .orElse(0);
+        List<Skill> sourceSkills = Arrays.asList(this.source.getSkills());
+        List<Skill> targetSkills = Arrays.asList(this.source.getSkills());
 
-                if (targetSkillLevel >= sourceSkillLevel) {
-                    this.weight--;
-                }
+        for ( int i = 0; i < sourceSkills.size(); i++ ){
+            if( sourceSkills.get(i) == targetSkills.get(i) ){
+               weight--;
             }
+
+            if( sourceSkills.get(i).getType() == Type.ENHANCED_DEFENSE && targetSkills.get(i).getType() == Type.QUICK_REGENERATION ||
+                    targetSkills.get(i).getType() == Type.ENHANCED_DEFENSE && sourceSkills.get(i).getType() == Type.QUICK_REGENERATION ){
+                weight+=2;
+            }
+            if( sourceSkills.get(i).getType() == Type.SWIFT_STRIKE && targetSkills.get(i).getType() == Type.PRECISION_SHOT ||
+                    targetSkills.get(i).getType() == Type.SWIFT_STRIKE && sourceSkills.get(i).getType() == Type.PRECISION_SHOT){
+                weight+=2;
+            }
+
+
         }
+
 
         if (this.source.getFaction() != this.target.getFaction()) {
             this.weight += 1;

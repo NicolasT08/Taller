@@ -17,17 +17,14 @@ public class Runner {
         // Recuperamos el grafo
         Graph<NPC, DefaultWeightedEdge> graph = controller.getGraph();
 
-        // Buscamos dos NPC específicos por sus nombres
-        NPC sourceNPC = controller.findNPC("Amelia");
-        NPC targetNPC = controller.findNPC("Eve");
 
-        if (sourceNPC != null && targetNPC != null) {
+        if ( controller.findNPC("Amelia") != null && controller.findNPC("Pekora") != null) {
             // Calculamos el camino más corto entre los dos NPC
-            List<NPC> shortestPath = controller.calculateShortestPath(sourceNPC, targetNPC);
+            List<NPC> shortestPath = controller.calculateShortestPath("Amelia", "Pekora");
 
             if (shortestPath != null) {
                 // Imprimimos el camino más corto
-                System.out.println("Camino más corto entre " + sourceNPC.getName() + " y " + targetNPC.getName() + ":");
+                System.out.println("Camino más corto entre " + "Amelia" + " y " + "Pekora" + ":");
                 for (NPC npc : shortestPath) {
                     System.out.println(npc.getName());
                 }

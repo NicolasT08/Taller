@@ -7,7 +7,7 @@ import java.util.Objects;
 public class NPC {
     private String name;
     private int level;
-    private ArrayList<Skill> skills;
+    private Skill[] skills;
 
     private Faction faction;
     public NPC(){
@@ -18,7 +18,7 @@ public class NPC {
         this.name = name;
     }
 
-    public NPC(String name, int level, ArrayList<Skill> skills, Faction faction) {
+    public NPC(String name, int level, Skill[] skills, Faction faction) {
         this.name = name;
         this.level = level;
         this.skills = skills;
@@ -41,11 +41,11 @@ public class NPC {
         this.level = level;
     }
 
-    public ArrayList<Skill> getSkills() {
+    public Skill[] getSkills() {
         return skills;
     }
 
-    public void setSkills(ArrayList<Skill> skills) {
+    public void setSkills(Skill[] skills) {
         this.skills = skills;
     }
 
@@ -62,7 +62,8 @@ public class NPC {
         return "NPC{" +
                 "name='" + name + '\'' +
                 ", level=" + level +
-                ", skills=" + skills +
+                ", skills=" + Arrays.toString(skills) +
+                ", faction=" + faction +
                 '}';
     }
 
@@ -71,11 +72,13 @@ public class NPC {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NPC npc = (NPC) o;
-        return level == npc.level && Objects.equals(name, npc.name) && Objects.equals(skills, npc.skills);
+        return level == npc.level && Objects.equals(name, npc.name) && Arrays.equals(skills, npc.skills) && faction == npc.faction;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, level, skills);
+        int result = Objects.hash(name, level, faction);
+        result = 31 * result + Arrays.hashCode(skills);
+        return result;
     }
 }
