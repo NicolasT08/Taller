@@ -119,8 +119,11 @@ public class RelationShipController {
 
         DijkstraShortestPath<NPC, DefaultWeightedEdge> dijkstra = new DijkstraShortestPath<>(this.graph);
 
-        if( dijkstra.getPath(sourceNPC, targetNPC).getVertexList() == null ) return null;
-        return dijkstra.getPath(sourceNPC, targetNPC).getVertexList();
+        try{
+            return dijkstra.getPath(sourceNPC, targetNPC).getVertexList();
+        }catch (Exception e){
+            return null;
+        }
     }
 
     public Graph<NPC, DefaultWeightedEdge> getGraph() {

@@ -79,8 +79,5 @@ public class RelationShip {
             this.weight +=2;
         }
 
-
-        this.weight = Math.abs(this.source.getLevel() - this.target.getLevel());
-
     }
 }
